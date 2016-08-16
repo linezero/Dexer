@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -26,9 +26,9 @@ using System.Linq;
 namespace Dexer.IO.Collectors
 {
 
-/* Taken from (great thanks)
- * http://stackoverflow.com/questions/1982592/topological-sorting-using-linq
- */
+	/* Taken from (great thanks)
+	 * http://stackoverflow.com/questions/1982592/topological-sorting-using-linq
+	 */
 
 	interface IPartialComparer<in T>
 	{

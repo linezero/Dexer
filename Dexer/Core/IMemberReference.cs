@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -23,8 +23,8 @@ using System;
 
 namespace Dexer.Core
 {
-    public interface IMemberReference : IEquatable<IMemberReference>
-    {
-        string Name { get; set; }
-    }
+	public interface IMemberReference : IEquatable<IMemberReference>
+	{
+		string Name { get; set; }
+	}
 }

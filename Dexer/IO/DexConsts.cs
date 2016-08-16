@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -21,14 +21,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 namespace Dexer.IO
 {
-    internal static class DexConsts
-    {
-        internal static readonly byte[] FileMagic = { 0x64, 0x65, 0x78, 0x0a, 0x30, 0x33, 0x35, 0x00 };
-        internal const uint Endian = 0x12345678;
-        internal const uint ReverseEndian = 0x78563412;
-        internal const uint NoIndex = 0xffffffff;
-        internal const char InnerClassMarker = '$';
-        internal const int SignatureSize = 20;
-        internal const int HeaderSize = 0x70;
-    }
+	internal static class DexConsts
+	{
+		internal static readonly byte[] FileMagic = { 0x64, 0x65, 0x78, 0x0a, 0x30, 0x33, 0x35, 0x00 };
+		internal const uint Endian = 0x12345678;
+		internal const uint ReverseEndian = 0x78563412;
+		internal const uint NoIndex = 0xffffffff;
+		internal const char InnerClassMarker = '$';
+		internal const int SignatureSize = 20;
+		internal const int HeaderSize = 0x70;
+	}
 }

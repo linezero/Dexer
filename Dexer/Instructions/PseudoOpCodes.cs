@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -21,10 +21,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
 namespace Dexer.Instructions
 {
-    public enum PseudoOpCodes
-    {
-        PackedSwitch = 0x0100,
-        SparseSwitch = 0x0200,
-        FillArrayData = 0x0300
-    }
+	public enum PseudoOpCodes
+	{
+		PackedSwitch = 0x0100,
+		SparseSwitch = 0x0200,
+		FillArrayData = 0x0300
+	}
 }

@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -24,17 +24,17 @@ using Dexer.Core;
 
 namespace Dexer.IO.Collectors
 {
-    internal class FieldReferenceComparer : IComparer<FieldReference>
-    {
-        private readonly TypeReferenceComparer _typeReferenceComparer = new TypeReferenceComparer();
-        private readonly StringComparer _stringComparer = new StringComparer();
+	internal class FieldReferenceComparer : IComparer<FieldReference>
+	{
+		private readonly TypeReferenceComparer _typeReferenceComparer = new TypeReferenceComparer();
+		private readonly StringComparer _stringComparer = new StringComparer();
 
-        public int Compare(FieldReference x, FieldReference y)
-        {
-            var result = _typeReferenceComparer.Compare(x.Owner, y.Owner);
-            if (result == 0)
-                result = _stringComparer.Compare(x.Name, y.Name);
-            return result;
-        }
-    }
+		public int Compare(FieldReference x, FieldReference y)
+		{
+			var result = _typeReferenceComparer.Compare(x.Owner, y.Owner);
+			if (result == 0)
+				result = _stringComparer.Compare(x.Name, y.Name);
+			return result;
+		}
+	}
 }

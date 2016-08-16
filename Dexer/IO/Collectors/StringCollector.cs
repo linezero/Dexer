@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -19,56 +19,55 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. */
 
-using System;
 using Dexer.Core;
 using Dexer.Instructions;
 using Dexer.Metadata;
 
 namespace Dexer.IO.Collectors
 {
-    internal class StringCollector : BaseCollector<String>
-    {
+	internal class StringCollector : BaseCollector<string>
+	{
 
-        public override void Collect(DebugInfo debugInfo)
-        {
-            base.Collect(debugInfo);
+		public override void Collect(DebugInfo debugInfo)
+		{
+			base.Collect(debugInfo);
 
-            if (debugInfo != null && debugInfo.Owner != null && debugInfo.Owner.Owner != null && !debugInfo.Owner.Owner.IsStatic)
-                Collect("this");
-        }
+			if (debugInfo != null && debugInfo.Owner != null && debugInfo.Owner.Owner != null && !debugInfo.Owner.Owner.IsStatic)
+				Collect("this");
+		}
 
-        public override void Collect(Prototype prototype)
-        {
-            base.Collect(prototype);
+		public override void Collect(Prototype prototype)
+		{
+			base.Collect(prototype);
 
-            // Shorty descriptor
-            Collect(TypeDescriptor.Encode(prototype));
-        }
+			// Shorty descriptor
+			Collect(TypeDescriptor.Encode(prototype));
+		}
 
-        public override void Collect(ArrayType array)
-        {
-            // Do not 'over' collect String descriptors by iterating over array.ElementType
-            Collect(array as TypeReference);
-        }
+		public override void Collect(ArrayType array)
+		{
+			// Do not 'over' collect String descriptors by iterating over array.ElementType
+			Collect(array as TypeReference);
+		}
 
-        public override void Collect(TypeReference tref)
-        {
-            base.Collect(tref);
-            Collect(TypeDescriptor.Encode(tref));
-        }
+		public override void Collect(TypeReference tref)
+		{
+			base.Collect(tref);
+			Collect(TypeDescriptor.Encode(tref));
+		}
 
-        public override void Collect(string str)
-        {
-            base.Collect(str);
+		public override void Collect(string str)
+		{
+			base.Collect(str);
 
-            if (str != null)
-            {
-                if (!Items.ContainsKey(str))
-                    Items[str] = 0;
+			if (str != null)
+			{
+				if (!Items.ContainsKey(str))
+					Items[str] = 0;
 
-                Items[str]++;
-            }
-        }
+				Items[str]++;
+			}
+		}
 
-    }
+	}
 }

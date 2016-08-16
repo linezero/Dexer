@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -27,40 +27,38 @@ using System.Text;
 
 namespace Dexer.IO
 {
-    internal class AnnotationSet : List<Annotation>, IEquatable<AnnotationSet>
-    {
-        public AnnotationSet(IAnnotationProvider provider)
-        {
-            AddRange(provider.Annotations);
-        }
+	internal class AnnotationSet : List<Annotation>, IEquatable<AnnotationSet>
+	{
+		public AnnotationSet(IAnnotationProvider provider)
+		{
+			AddRange(provider.Annotations);
+		}
 
-        public override bool Equals(object obj)
-        {
-            if (obj is AnnotationSet)
-                return Equals(obj as AnnotationSet);
-            
-            return false;
-        }
+		public override bool Equals(object obj)
+		{
+			var annotationSet = obj as AnnotationSet;
+			return annotationSet != null && Equals(annotationSet);
+		}
 
-        public override int GetHashCode()
-        {
-            var builder = new StringBuilder();
-            foreach (var annotation in this)
-                builder.AppendLine(annotation.GetHashCode().ToString(CultureInfo.InvariantCulture));
-            return builder.ToString().GetHashCode();
-        }
+		public override int GetHashCode()
+		{
+			var builder = new StringBuilder();
+			foreach (var annotation in this)
+				builder.AppendLine(annotation.GetHashCode().ToString(CultureInfo.InvariantCulture));
+			return builder.ToString().GetHashCode();
+		}
 
-        public bool Equals(AnnotationSet other)
-        {
-            var result = Count == other.Count;
+		public bool Equals(AnnotationSet other)
+		{
+			var result = Count == other.Count;
 
-            if (result)
-            {
-                for (var i = 0; i < Count; i++)
-                    result &= this[i].Equals(other[i]);
-            }
+			if (result)
+			{
+				for (var i = 0; i < Count; i++)
+					result &= this[i].Equals(other[i]);
+			}
 
-            return result;
-        }
-    }
+			return result;
+		}
+	}
 }

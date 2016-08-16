@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -24,24 +24,24 @@ using Dexer.Core;
 
 namespace Dexer.IO.Collectors
 {
-    internal class MethodReferenceComparer : IComparer<MethodReference>
-    {
-        private readonly PrototypeComparer _prototypeComparer = new PrototypeComparer();
-        private readonly TypeReferenceComparer _typeReferenceComparer = new TypeReferenceComparer();
-        private readonly StringComparer _stringComparer = new StringComparer();
+	internal class MethodReferenceComparer : IComparer<MethodReference>
+	{
+		private readonly PrototypeComparer _prototypeComparer = new PrototypeComparer();
+		private readonly TypeReferenceComparer _typeReferenceComparer = new TypeReferenceComparer();
+		private readonly StringComparer _stringComparer = new StringComparer();
 
-        public int Compare(MethodReference x, MethodReference y)
-        {
-            var result = _typeReferenceComparer.Compare(x.Owner, y.Owner);
+		public int Compare(MethodReference x, MethodReference y)
+		{
+			var result = _typeReferenceComparer.Compare(x.Owner, y.Owner);
 
-            if (result == 0)
-                result = _stringComparer.Compare(x.Name, y.Name);
+			if (result == 0)
+				result = _stringComparer.Compare(x.Name, y.Name);
 
-            if (result == 0)
-                result = _prototypeComparer.Compare(x.Prototype, y.Prototype);
+			if (result == 0)
+				result = _prototypeComparer.Compare(x.Prototype, y.Prototype);
 
-            return result;
-        }
+			return result;
+		}
 
-    }
+	}
 }

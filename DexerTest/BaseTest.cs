@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -24,34 +24,35 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Dexer.Test
 {
-    [TestClass]
-    public abstract class BaseTest
-    {
-        private TestContext _testContextInstance;
-        private string _filesDirectory;
+	[TestClass]
+	public abstract class BaseTest
+	{
+		private TestContext _testContextInstance;
+		private string _filesDirectory;
 
-        public string FilesDirectory
-        {
-            get { return _filesDirectory; }
-        }
+		public string FilesDirectory
+		{
+			get { return _filesDirectory; }
+		}
 
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return _testContextInstance;
-            }
-            set
-            {
-                _testContextInstance = value;
-                _filesDirectory = Path.Combine(_testContextInstance.TestDir, @"..\..");
-                _filesDirectory = Path.Combine(_filesDirectory, @"DexerTest\Files");
-                _filesDirectory = Path.GetFullPath(_filesDirectory);
-            }
-        }
-    }
+		public string[] GetTestFiles()
+		{
+			return Directory.GetFiles(FilesDirectory, "*.dex");
+		}
+
+		public TestContext TestContext
+		{
+			get
+			{
+				return _testContextInstance;
+			}
+			set
+			{
+				_testContextInstance = value;
+				_filesDirectory = Path.Combine(_testContextInstance.TestDir, @"..\..");
+				_filesDirectory = Path.Combine(_filesDirectory, @"DexerTest\Files");
+				_filesDirectory = Path.GetFullPath(_filesDirectory);
+			}
+		}
+	}
 }

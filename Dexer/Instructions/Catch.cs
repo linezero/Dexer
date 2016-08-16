@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -27,51 +27,43 @@ using Dexer.Metadata;
 
 namespace Dexer.Instructions
 {
-    public class Catch : ICloneable, IEquatable<Catch>
-    {
-        public TypeReference Type { get; set; }
-        public Instruction Instruction { get; set; }
+	public class Catch : ICloneable, IEquatable<Catch>
+	{
+		public TypeReference Type { get; set; }
+		public Instruction Instruction { get; set; }
 
-        #region " ICloneable "
-        internal Catch Clone()
-        {
-            return (Catch)(this as ICloneable).Clone();
-        }
+		internal Catch Clone()
+		{
+			return (Catch)(this as ICloneable).Clone();
+		}
 
-        object ICloneable.Clone()
-        {
-            var result = new Catch {Type = Type, Instruction = Instruction};
-	        return result;
-        }
-        #endregion
+		object ICloneable.Clone()
+		{
+			var result = new Catch { Type = Type, Instruction = Instruction };
+			return result;
+		}
 
-        #region " IEquatable "
-        public bool Equals(Catch other)
-        {
-            return Type.Equals(other.Type)
-                && Instruction.Equals(other.Instruction);
-        }
-        #endregion
+		public bool Equals(Catch other)
+		{
+			return Type.Equals(other.Type)
+				&& Instruction.Equals(other.Instruction);
+		}
 
-        #region " Object "
-        public override bool Equals(object obj)
-        {
-            if (obj is Catch)
-                return Equals(obj as Catch);
+		public override bool Equals(object obj)
+		{
+			var other = obj as Catch;
+			return other != null && Equals(other);
+		}
 
-            return false;
-        }
+		public override int GetHashCode()
+		{
+			var builder = new StringBuilder();
 
-        public override int GetHashCode()
-        {
-            var builder = new StringBuilder();
+			builder.AppendLine(TypeDescriptor.Encode(Type));
+			builder.AppendLine(Instruction.GetHashCode().ToString(CultureInfo.InvariantCulture));
 
-            builder.AppendLine(TypeDescriptor.Encode(Type));
-            builder.AppendLine(Instruction.GetHashCode().ToString(CultureInfo.InvariantCulture));
+			return builder.ToString().GetHashCode();
+		}
 
-            return builder.ToString().GetHashCode();
-        }
-        #endregion
-
-    }
+	}
 }

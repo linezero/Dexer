@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -25,28 +25,28 @@ using Dexer.Extensions;
 namespace Dexer.IO.Markers
 {
 
-    internal class SignatureMarker : Marker<byte[]>
-    {
-        public override byte[] Value
-        {
-            set
-            {
+	internal class SignatureMarker : Marker<byte[]>
+	{
+		public override byte[] Value
+		{
+			set
+			{
 #if !DISABLE_MARKERS || !DEBUG
-                foreach (var position in Positions)
-                {
-                    Writer.PreserveCurrentPosition(position, () => Writer.Write(value));
-                }
+				foreach (var position in Positions)
+				{
+					Writer.PreserveCurrentPosition(position, () => Writer.Write(value));
+				}
 #endif
-            }
-        }
+			}
+		}
 
-        public override void Allocate()
-        {
-            Writer.Write(new byte[DexConsts.SignatureSize]);
-        }
+		public override void Allocate()
+		{
+			Writer.Write(new byte[DexConsts.SignatureSize]);
+		}
 
-        public SignatureMarker(BinaryWriter writer) : base(writer) { }
+		public SignatureMarker(BinaryWriter writer) : base(writer) { }
 
-    }
+	}
 
 }

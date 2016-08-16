@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -24,16 +24,16 @@ using Dexer.Core;
 
 namespace Dexer.IO.Collectors
 {
-    internal class MethodDefinitionComparer : MethodReferenceComparer, IComparer<MethodDefinition>
-    {
-        public int Compare(MethodDefinition x, MethodDefinition y)
-        {
-            var result = x.IsVirtual.CompareTo(y.IsVirtual);
+	internal class MethodDefinitionComparer : MethodReferenceComparer, IComparer<MethodDefinition>
+	{
+		public int Compare(MethodDefinition x, MethodDefinition y)
+		{
+			var result = x.IsVirtual.CompareTo(y.IsVirtual);
 
-            if (result == 0)
-                result = base.Compare(x, y);
+			if (result == 0)
+				result = base.Compare(x, y);
 
-            return result;
-        }
-    }
+			return result;
+		}
+	}
 }

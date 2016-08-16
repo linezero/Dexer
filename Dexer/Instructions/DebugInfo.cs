@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -23,18 +23,18 @@ using System.Collections.Generic;
 
 namespace Dexer.Instructions
 {
-    public class DebugInfo
-    {
-        public List<string> Parameters { get; set; }
-        public List<DebugInstruction> DebugInstructions { get; set; }
-        public uint LineStart { get; set; }
-        public MethodBody Owner { get; set; }
+	public class DebugInfo
+	{
+		public List<string> Parameters { get; set; }
+		public List<DebugInstruction> DebugInstructions { get; set; }
+		public uint LineStart { get; set; }
+		public MethodBody Owner { get; set; }
 
-        public DebugInfo(MethodBody body)
-        {
-            Owner = body;
-            Parameters = new List<string>();
-            DebugInstructions = new List<DebugInstruction>();
-        }
-    }
+		public DebugInfo(MethodBody body)
+		{
+			Owner = body;
+			Parameters = new List<string>();
+			DebugInstructions = new List<DebugInstruction>();
+		}
+	}
 }

@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -25,27 +25,28 @@ using Dexer.Extensions;
 namespace Dexer.IO.Markers
 {
 
-    internal class UIntMarker : Marker<uint>
-    {
-        public override uint Value
-        {
-            set {
+	internal class UIntMarker : Marker<uint>
+	{
+		public override uint Value
+		{
+			set
+			{
 #if !DISABLE_MARKERS || !DEBUG
-                foreach (var position in Positions)
-                {
-                    Writer.PreserveCurrentPosition(position, () => Writer.Write(value));
-                }
+				foreach (var position in Positions)
+				{
+					Writer.PreserveCurrentPosition(position, () => Writer.Write(value));
+				}
 #endif
-            }
-        }
+			}
+		}
 
-        public override void Allocate()
-        {
-            Writer.Write((uint) 0);
-        }
+		public override void Allocate()
+		{
+			Writer.Write((uint)0);
+		}
 
-        public UIntMarker(BinaryWriter writer) : base(writer) { }
+		public UIntMarker(BinaryWriter writer) : base(writer) { }
 
-    }
+	}
 
 }

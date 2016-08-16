@@ -6,3 +6,5 @@
 /DexerTest/obj
 /*.user
 /*.suo
+/DexerTest/Files/*.out
+/DexerTest/Files/disable

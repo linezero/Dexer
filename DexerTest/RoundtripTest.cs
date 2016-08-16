@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -27,83 +27,88 @@ using Dexer.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Dexer.IO;
 using Dexer.Metadata;
+using System;
+using System.Reflection;
+using System.Collections;
 
 namespace Dexer.Test
 {
-    [TestClass]
-    public class RoundtripTest : BaseTest
-    {
-        private void TestReadWrite(string file, out DexReader dexreader, out DexWriter dexwriter)
-        {
-            TestContext.WriteLine("Testing {0}", file);
+	[TestClass]
+	public class RoundtripTest : BaseTest
+	{
+		private void TestReadWrite(string file, out DexReader dexreader, out DexWriter dexwriter)
+		{
+			TestContext.WriteLine("Testing {0}", file);
 
-            var dex = new Dex();
-            dexreader = new DexReader(dex);
+			var dex = new Dex();
+			dexreader = new DexReader(dex);
 
-            using (Stream fs = new FileStream(file, FileMode.Open))
-            using (var reader = new BinaryReader(fs))
-                dexreader.ReadFrom(reader);
+			using (Stream fs = new FileStream(file, FileMode.Open))
+			using (var reader = new BinaryReader(fs))
+				dexreader.ReadFrom(reader);
 
-            dexwriter = new DexWriter(dex);
-            dexwriter.WriteTo(new BinaryWriter(new MemoryStream()));
-        }
+			dexwriter = new DexWriter(dex);
 
-        [TestMethod]
-        public void TestMap()
-        {
-            foreach (var file in Directory.GetFiles(FilesDirectory))
-            {
-                DexReader dexreader;
-                DexWriter dexwriter;
-                TestReadWrite(file, out dexreader, out dexwriter);
+			using (Stream fs = new FileStream(file + ".out", FileMode.Create))
+			using (var writer = new BinaryWriter(fs))
+				dexwriter.WriteTo(writer);
+		}
 
-                var checklist = new Dictionary<TypeCodes, string>();
+		[TestMethod]
+		public void TestMap()
+		{
+			foreach (var file in GetTestFiles())
+			{
+				DexReader dexreader;
+				DexWriter dexwriter;
+				TestReadWrite(file, out dexreader, out dexwriter);
 
-                foreach (var tc in dexwriter.Map.Keys.Where(tc => dexreader.Map.ContainsKey(tc)))
-                {
-	                if (dexreader.Map[tc].Size != dexwriter.Map[tc].Size)
-	                {
-		                TestContext.WriteLine("{0} Size differs expected={1}, actual={2}", tc, dexreader.Map[tc].Size, dexwriter.Map[tc].Size);
-		                if (!checklist.ContainsKey(tc))
-			                checklist.Add(tc, tc.ToString());
-	                }
-	                if (dexreader.Map[tc].Offset != dexwriter.Map[tc].Offset)
-	                {
-		                TestContext.WriteLine("{0} Offset differs : expected={1}, actual={2}", tc, dexreader.Map[tc].Offset, dexwriter.Map[tc].Offset);
-		                if (!checklist.ContainsKey(tc))
-			                checklist.Add(tc, tc.ToString());
-	                }
-                }
+				var checklist = new Dictionary<TypeCodes, string>();
 
-                Assert.IsTrue(checklist.Count == 0, string.Concat("Check test report : ", string.Join(", ", checklist.Values)));
-            }
-        }
+				foreach (var tc in dexwriter.Map.Keys.Where(tc => dexreader.Map.ContainsKey(tc)))
+				{
+					if (dexreader.Map[tc].Count != dexwriter.Map[tc].Count)
+					{
+						TestContext.WriteLine("{0} Count differs expected={1}, actual={2}", tc, dexreader.Map[tc].Count, dexwriter.Map[tc].Count);
+						if (!checklist.ContainsKey(tc))
+							checklist.Add(tc, tc.ToString());
+					}
+					if (dexreader.Map[tc].Offset != dexwriter.Map[tc].Offset)
+					{
+						TestContext.WriteLine("{0} Offset differs : expected={1}, actual={2}", tc, dexreader.Map[tc].Offset, dexwriter.Map[tc].Offset);
+						if (!checklist.ContainsKey(tc))
+							checklist.Add(tc, tc.ToString());
+					}
+				}
 
-        [TestMethod]
-        public void TestCheckSum()
-        {
-            foreach (var file in Directory.GetFiles(FilesDirectory))
-            {
-                DexReader dexreader;
-                DexWriter dexwriter;
-                TestReadWrite(file, out dexreader, out dexwriter);
+				Assert.IsTrue(checklist.Count == 0, string.Concat("Check test report : ", string.Join(", ", checklist.Values)));
+			}
+		}
 
-                Assert.AreEqual(dexreader.Header.CheckSum, dexwriter.CheckSum);
-            }
-        }
+		[TestMethod]
+		public void TestCheckSum()
+		{
+			foreach (var file in GetTestFiles())
+			{
+				DexReader dexreader;
+				DexWriter dexwriter;
+				TestReadWrite(file, out dexreader, out dexwriter);
 
-        [TestMethod]
-        public void TestSignature()
-        {
-            foreach (var file in Directory.GetFiles(FilesDirectory))
-            {
-                DexReader dexreader;
-                DexWriter dexwriter;
-                TestReadWrite(file, out dexreader, out dexwriter);
+				Assert.AreEqual(dexreader.Header.CheckSum, dexwriter.CheckSum);
+			}
+		}
 
-                Assert.IsTrue(dexreader.Header.Signature.Match(dexwriter.Signature,0));
-            }
-        }
+		[TestMethod]
+		public void TestSignature()
+		{
+			foreach (var file in GetTestFiles())
+			{
+				DexReader dexreader;
+				DexWriter dexwriter;
+				TestReadWrite(file, out dexreader, out dexwriter);
 
-    }
+				Assert.IsTrue(dexreader.Header.Signature.Match(dexwriter.Signature, 0));
+			}
+		}
+	}
 }

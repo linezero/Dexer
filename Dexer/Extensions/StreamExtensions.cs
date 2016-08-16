@@ -1,4 +1,4 @@
-﻿/* Dexer Copyright (c) 2010-2013 Sebastien LEBRETON
+﻿/* Dexer Copyright (c) 2010-2016 Sebastien LEBRETON
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -23,19 +23,19 @@ using System.IO;
 
 namespace Dexer.Extensions
 {
-    public static class StreamExtensions
-    {
+	public static class StreamExtensions
+	{
 
-        // Note: already implemented in .NET 4.0
-        public static void CopyTo(this Stream source, Stream destination)
-        {
-            int num;
-            var buffer = new byte[0x1000];
-            while ((num = source.Read(buffer, 0, buffer.Length)) != 0)
-            {
-                destination.Write(buffer, 0, num);
-            }
-        }
+		// Note: already implemented in .NET 4.0
+		public static void CopyTo(this Stream source, Stream destination)
+		{
+			int num;
+			var buffer = new byte[0x1000];
+			while ((num = source.Read(buffer, 0, buffer.Length)) != 0)
+			{
+				destination.Write(buffer, 0, num);
+			}
+		}
 
-    }
+	}
 }
